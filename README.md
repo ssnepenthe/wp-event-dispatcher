@@ -22,7 +22,7 @@ Event dispatchers (`WpEventDispatcher\EventDispatcherInterface`) encourage the e
 
 ## Usage
 
-The event dispatcher is intended to be used in place of direct calls to the various action and filter function provided by WordPress.
+The event dispatcher is intended to be used in place of direct calls to the various action and filter functions provided by WordPress.
 
 Event dispatchers do away with the idea of actions and filters altogether. Events are wrapped up in standalone event classes. If you want to "filter" a value, do so using typed properties or setters and getters on the event class. Event handlers can be standalone callables, but should preferably be wrapped in subscriber classes.
 
@@ -32,7 +32,7 @@ The primary methods you will use are `dispatch`, `addListener`, and `addSubscrib
 
 By default `dispatch` uses the FQCN of the event class as the event name. If an event needs a dynamic name it should implement the `WpEventDispatcher\NamedEventInterface` interface.
 
-Event dispatchers might require a bit extra boilerplate code, but provide a degree of type-safety and autocompletion you don't get with standard hooks.
+Event dispatchers might require a bit extra boilerplate code as compared to standard WordPress hooks, but provide a degree of type-safety and autocompletion you wouldn't otherwise get.
 
 Below is a simple example of how you might replace a WordPress action:
 
@@ -49,14 +49,14 @@ do_action('my_plugin_initialized');
 After:
 
 ```php
+class MyPluginInitialized
+{
+}
+
 $eventDispatcher = new EventDispatcher();
 $eventDispatcher->addListener(MyPluginInitialized::class, function (MyPluginInitialized $event) {
     // ...
 });
-
-class MyPluginInitialized
-{
-}
 
 $eventDispatcher->dispatch(new MyPluginInitialized());
 ```
@@ -85,17 +85,17 @@ if (! is_string($value)) {
 After:
 
 ```php
-$eventDispatcher = new EventDispatcher();
-$eventDispatcher->addListener(MyPluginFilteredValue::class, function (MyPluginFilteredValue $event) {
-    $event->value = modifyValue($event->value);
-});
-
 class MyPluginFilteredValue
 {
     public function __construct(public string $value)
     {
     }
 }
+
+$eventDispatcher = new EventDispatcher();
+$eventDispatcher->addListener(MyPluginFilteredValue::class, function (MyPluginFilteredValue $event) {
+    $event->value = modifyValue($event->value);
+});
 
 $event = new MyPluginFilteredValue('some string');
 $eventDispatcher->dispatch($event);
