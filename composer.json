@@ -1,5 +1,5 @@
 {
-    "name": "ssnepenthe/toy-wp-event-dispatcher",
+    "name": "ssnepenthe/wp-event-dispatcher",
     "description": "A Symfony-style event dispatcher for WordPress",
     "require": {
         "php": "^7.4 || ^8.0"
