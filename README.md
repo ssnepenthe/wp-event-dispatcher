@@ -1,6 +1,6 @@
 # wp-event-dispatcher
 
-This package introduces the event dispatcher abstraction over WordPress hooks.
+A simple event dispatcher abstraction over WordPress hooks.
 
 ## Warning
 
