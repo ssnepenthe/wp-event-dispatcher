@@ -1,6 +1,6 @@
 {
     "name": "ssnepenthe/wp-event-dispatcher",
-    "description": "A Symfony-style event dispatcher for WordPress",
+    "description": "An event dispatcher abstraction over WordPress hooks",
     "require": {
         "php": "^7.4 || ^8.0"
     },
