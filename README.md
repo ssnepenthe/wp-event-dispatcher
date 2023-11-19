@@ -1,6 +1,6 @@
-# toy-wp-event-dispatcher
+# wp-event-dispatcher
 
-WIP
+This package introduces the event dispatcher abstraction over WordPress hooks.
 
 ## Warning
 
@@ -12,19 +12,19 @@ As the label suggests, it should be treated as a toy.
 
 ## Installation
 
-WIP
+```sh
+composer require ssnepenthe/wp-event-dispatcher
+```
 
 ## Overview
 
-This package introduces the event dispatcher abstraction over WordPress hooks.
-
-Event dispatchers (`WpEventDispatcher\EventDispatcherInterface`) encourage the encapsulation of events into dedicated event classes and event handlers into dedicated subscriber classes.
+Event dispatchers (`WpEventDispatcher\EventDispatcherInterface`) encourage the encapsulation of events into dedicated event classes and event listeners into dedicated subscriber classes.
 
 ## Usage
 
 The event dispatcher is intended to be used in place of direct calls to the various action and filter functions provided by WordPress.
 
-Event dispatchers do away with the idea of actions and filters altogether. Events are wrapped up in standalone event classes. If you want to "filter" a value, do so using typed properties or setters and getters on the event class. Event handlers can be standalone callables, but should preferably be wrapped in subscriber classes.
+Event dispatchers do away with the idea of actions and filters altogether. Events are wrapped up in standalone event classes. If you want to "filter" a value, do so using typed properties or setters and getters on the event class. Event listeners can be standalone callables, but should preferably be implemented via subscriber classes.
 
 This is roughly modeled after the Symfony event dispatcher component, but uses WordPress hooks behind the scenes.
 
@@ -102,13 +102,13 @@ $eventDispatcher->dispatch($event);
 $value = $event->value;
 ```
 
-Event dispatchers also allow for event handlers to be grouped logically within a subscriber class.
+Event dispatchers also allow for event listeners to be grouped logically within a subscriber class.
 
 Subscribers should implement the `WpEventDispatcher\SubscriberInterface` interface.
 
 This interface has a single method - `getSubscribedEvents`. It should return an array in any of the following formats:
 
-Array keys are hook tag names, values are method names on this subscriber instance to use as handlers.
+Array keys are hook tag names, values are method names on this subscriber instance to use as listeners.
 
 ```php
 return [
